@@ -10,7 +10,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak private var currentHourlyWeatherCollectionView: UICollectionView!
+    @IBOutlet weak private var currentWeatherCollectionView: UICollectionView!
     @IBOutlet weak private var allWeatherTableView: UITableView!
     @IBOutlet weak private var currentConditionIconImageView: UIImageView!
     @IBOutlet weak private var cityLabel: UILabel!
@@ -34,15 +34,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         localeManager.delegate = self
-        currentHourlyWeatherCollectionView.delegate = self
-        currentHourlyWeatherCollectionView.dataSource = self
+        currentWeatherCollectionView.delegate = self
+        currentWeatherCollectionView.dataSource = self
         allWeatherTableView.dataSource = self
         allWeatherTableView.delegate = self
         configurationLocaleManager()
-        let nibCollectionView = UINib(nibName: String(describing: CurrentHourlyWeatherCollectionViewCell.self), bundle: nil)
-        currentHourlyWeatherCollectionView.register(nibCollectionView, forCellWithReuseIdentifier: CurrentHourlyWeatherCollectionViewCell.identifier)
-        let nibTableView = UINib(nibName: String(describing: AllWeatherTableViewCell.self), bundle: nil)
-        allWeatherTableView.register(nibTableView, forCellReuseIdentifier: AllWeatherTableViewCell.identifier)
+        let nibCollection = UINib(nibName: String(describing: CurrentWeatherCollectionViewCell.self), bundle: nil)
+        let collectionIdentifier = CurrentWeatherCollectionViewCell.identifier
+        currentWeatherCollectionView.register(nibCollection, forCellWithReuseIdentifier: collectionIdentifier)
+        let nibTable = UINib(nibName: String(describing: AllWeatherTableViewCell.self), bundle: nil)
+        let tableIdentifier = AllWeatherTableViewCell.identifier
+        allWeatherTableView.register(nibTable, forCellReuseIdentifier: tableIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +129,7 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.reloadDataCurrentWeather(weather)
                     self.allWeatherTableView.reloadData()
-                    self.currentHourlyWeatherCollectionView.reloadData()
+                    self.currentWeatherCollectionView.reloadData()
                     self.activityIndicator.stopAnimating()
                 }
             } else {
@@ -158,12 +160,13 @@ class ViewController: UIViewController {
             if let location = try? JSONDecoder().decode(GeoLocation.self, from: data) {
                 ManagerData.shared.isChangeCity = false
                 ManagerData.shared.isGeoLocationDidUpdate = true
-                ManagerData.shared.currentCity = "\(locations.last?.coordinate.latitude ?? 0),\(locations.last?.coordinate.longitude ?? 0)"
+                let last = "\(locations.last?.coordinate.latitude ?? 0),\(locations.last?.coordinate.longitude ?? 0)"
+                ManagerData.shared.currentCity = last
                 UserDefaults.standard.setValue(ManagerData.shared.currentCity, forKey: "Current_City")
                 ManagerData.shared.geoLocationResponse = location.display
                 self.requestWeatherData()
             } else {
-                print("Bad Weather")
+                print("Bad weather")
             }
         }
         task.resume()
@@ -187,7 +190,9 @@ class ViewController: UIViewController {
         currentDateLabel.text = stringFromeDate
         currentTemperatureLabel.text = String("\(Int(weather.currentConditions.temp ?? 0))°")
         currentConditionLabel.text = weather.currentConditions.conditions ?? ""
-        currentTemperatureMinAndMax.text = "\(String(Int(weather.days?.first?.tempmax ?? 0)))°/\(String(Int(weather.days?.first?.tempmin ?? 0)))°"
+        let temMax = weather.days?.first?.tempmax ?? 0
+        let tempMin = weather.days?.first?.tempmin ?? 0
+        currentTemperatureMinAndMax.text = "\(String(Int(temMax)))°/\(String(Int(tempMin)))°"
         currentFeelsLikeLabel.text = String("Feels like \(Int(weather.currentConditions.feelslike ?? 0))°")
         currentConditionIconImageView.image = UIImage(named: weather.currentConditions.icon ?? "")
         uvindexCurrentWeatherLabel.text = String(weather.days?.first?.uvindex ?? 0)
@@ -219,10 +224,11 @@ extension ViewController: UICollectionViewDataSource {
         return count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let dequeue = currentHourlyWeatherCollectionView.dequeueReusableCell
-        let identifier = CurrentHourlyWeatherCollectionViewCell.identifier
-        guard let cell = dequeue(identifier, indexPath) as? CurrentHourlyWeatherCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let dequeue = currentWeatherCollectionView.dequeueReusableCell
+        let identifier = CurrentWeatherCollectionViewCell.identifier
+        guard let cell = dequeue(identifier, indexPath) as? CurrentWeatherCollectionViewCell else {
             return UICollectionViewCell()
         }
         guard let weather = ManagerData.shared.weather else {
@@ -235,10 +241,10 @@ extension ViewController: UICollectionViewDataSource {
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "HH:mm"
         let stringFromeDate = dateFormatter2.string(from: dateFromString)
-        cell.currentConditionWeatherIconImageView.image = UIImage(named: weather.days?.first?.hours?[indexPath.item].icon ?? "")
-        cell.humidityCurrentHourlyWeatherLabel.text = "\(String(Int(weather.days?.first?.hours?[indexPath.item].humidity ?? 0)))%"
-        cell.temperatureCurrentHourlyWeatherLabel.text = "\(String(Int(weather.days?.first?.hours?[indexPath.item].temp ?? 0)))°"
-        cell.timeCurrentHourlyWeatherLabel.text = stringFromeDate
+        cell.currentConditionImageView.image = UIImage(named: weather.days?.first?.hours?[indexPath.item].icon ?? "")
+        cell.humidityCurentLabel.text = "\(String(Int(weather.days?.first?.hours?[indexPath.item].humidity ?? 0)))%"
+        cell.temperatureCurentLabel.text = "\(String(Int(weather.days?.first?.hours?[indexPath.item].temp ?? 0)))°"
+        cell.timeCurentLabel.text = stringFromeDate
         return cell
     }
 }
@@ -257,7 +263,9 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = allWeatherTableView.dequeueReusableCell(withIdentifier: AllWeatherTableViewCell.identifier, for: indexPath) as? AllWeatherTableViewCell else {
+        let identifier = AllWeatherTableViewCell.identifier
+        let dequeue = allWeatherTableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        guard let cell = dequeue as? AllWeatherTableViewCell else {
             return UITableViewCell()
         }
         guard let weather = ManagerData.shared.weather else {
@@ -272,7 +280,9 @@ extension ViewController: UITableViewDataSource {
         let stringFromeDate = dateFormatter2.string(from: dateFromString)
         cell.conditionIconImageView.image = UIImage(named: weather.days?[indexPath.row].icon ?? "")
         cell.dateOfWeekLabel.text = stringFromeDate
-        cell.maxAndMinTemperatureLabel.text = "\(String(Int(weather.days?[indexPath.row].tempmax ?? 0)))°/\(String(Int(weather.days?[indexPath.row].tempmin ?? 0)))°"
+        let tempMax = weather.days?[indexPath.row].tempmax ?? 0
+        let tempMin = weather.days?[indexPath.row].tempmin ?? 0
+        cell.maxAndMinTemperatureLabel.text = "\(String(Int(tempMax)))°/\(String(Int(tempMin)))°"
         cell.procentHumidityLabel.text = "\(String(Int(weather.days?[indexPath.row].humidity ?? 0)))%"
         cell.windSpeedLabel.text = "\(String(weather.days?[indexPath.row].windspeed ?? 0))km/h"
         return cell

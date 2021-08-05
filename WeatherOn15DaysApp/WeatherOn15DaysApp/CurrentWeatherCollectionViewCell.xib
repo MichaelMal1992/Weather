@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CurrentHourlyWeatherCollectionViewCell" customModule="WeatherOn15DaysApp" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CurrentWeatherCollectionViewCell" customModule="WeatherOn15DaysApp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -93,10 +93,10 @@
             </constraints>
             <size key="customSize" width="50" height="100"/>
             <connections>
-                <outlet property="currentConditionWeatherIconImageView" destination="ob2-7e-QRQ" id="sit-ns-HR8"/>
-                <outlet property="humidityCurrentHourlyWeatherLabel" destination="n71-NK-LX8" id="6Nl-Xc-q4b"/>
-                <outlet property="temperatureCurrentHourlyWeatherLabel" destination="amP-An-7t1" id="skZ-K4-BOT"/>
-                <outlet property="timeCurrentHourlyWeatherLabel" destination="gSl-IF-jR6" id="6ty-vQ-2n3"/>
+                <outlet property="currentConditionImageView" destination="ob2-7e-QRQ" id="sit-ns-HR8"/>
+                <outlet property="humidityCurentLabel" destination="n71-NK-LX8" id="6Nl-Xc-q4b"/>
+                <outlet property="temperatureCurentLabel" destination="amP-An-7t1" id="skZ-K4-BOT"/>
+                <outlet property="timeCurentLabel" destination="gSl-IF-jR6" id="6ty-vQ-2n3"/>
             </connections>
             <point key="canvasLocation" x="89.855072463768124" y="-32.8125"/>
         </collectionViewCell>

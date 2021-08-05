@@ -8,12 +8,12 @@
 import Foundation
 
 class ListCities: Decodable {
-    
+
     let id: Int
     let name: String
     let state: String?
     let country: String
-    let coord : Coordinate
+    let coord: Coordinate
 }
 
 class Coordinate: Decodable {

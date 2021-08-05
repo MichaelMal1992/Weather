@@ -33,7 +33,8 @@ class ListOfCitiesViewController: UIViewController {
         if let text = listCitiesTextField.text {
             if text.isEmpty == false {
                 listCitiesTableView.isHidden = false
-                ManagerData.shared.sortedCitiesStringArray = ManagerData.shared.citiesStringArray.filter{$0.lowercased().contains(text.lowercased())}
+                let cities = ManagerData.shared.citiesStringArray
+                ManagerData.shared.sortedCitiesStringArray = cities.filter {$0.lowercased().contains(text.lowercased())}
             } else {
                 listCitiesTableView.isHidden = true
             }
