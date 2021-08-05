@@ -1,0 +1,6 @@
+framework module Pods_WeatherOn15DaysApp {
+  umbrella header "Pods-WeatherOn15DaysApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
