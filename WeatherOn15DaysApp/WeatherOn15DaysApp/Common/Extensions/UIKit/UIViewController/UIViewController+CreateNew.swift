@@ -9,8 +9,8 @@ import UIKit
 
 extension UIViewController {
 
-    func createViewController(_ viewController: String) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    func createViewController(_ viewController: String, _ storyboard: String) {
+        let storyboard = UIStoryboard(name: storyboard, bundle: nil)
         let newViewController = storyboard.instantiateViewController(withIdentifier: viewController)
         newViewController.modalPresentationStyle = .fullScreen
         newViewController.modalTransitionStyle = .crossDissolve

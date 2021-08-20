@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
 
     @IBOutlet weak private var currentWeatherCollectionView: UICollectionView!
     @IBOutlet weak private var allWeatherTableView: UITableView!
@@ -71,33 +71,16 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func searchCityButtonPressed(_ sender: UIButton) {
-        createViewController(String(describing: ListOfCitiesViewController.self))
-    }
-
-    private func requestListCitiesData() {
-        if let path = Bundle.main.path(forResource: "data", ofType: "json"),
-           let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-            if let listCities = try? JSONDecoder().decode(CitiesData.self, from: data) {
-                var arrayCities: [String] = []
-                for list in listCities.data {
-                    for city in list.cities {
-                        arrayCities.append("\(city), \(list.country)")
-                    }
-                }
-                let unique = Array(Set(arrayCities))
-                ManagerData.shared.citiesStringArray = unique.sorted()
-                ManagerData.shared.sortedCitiesStringArray = unique.sorted()
-            }
-        }
+        let name = String(describing: CitiesViewController.self)
+        createViewController(name, name)
     }
 
     private func requestWeatherData() {
         DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
-        requestListCitiesData()
-        ManagerData.shared.currentCity = UserDefaults.standard.value(forKey: "Current_City") as? String ?? ""
-        let currentCity = ManagerData.shared.currentCity.filter {$0 != " "}
+        ManagerCities.shared.currentCity = UserDefaults.standard.value(forKey: "Current_City") as? String ?? ""
+        let currentCity = ManagerCities.shared.currentCity.filter {$0 != " "}
         let string = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/\(currentCity)?unitGroup=metric&iconSet=icons2&key=5EMCD3JJPUY8HUAS7H8ZSMJHD"
         guard let url = URL(string: string) else {
             print("Invalid URL")
@@ -114,18 +97,18 @@ class ViewController: UIViewController {
                 return
             }
             if let weather = try? JSONDecoder().decode(Weather.self, from: data) {
-                    ManagerData.shared.weather = weather
-                    if ManagerData.shared.isChangeCity {
+                    ManagerCities.shared.weather = weather
+                    if ManagerCities.shared.isChangeCity {
                         let userDefaults = UserDefaults.standard
-                        let currentCity = ManagerData.shared.currentCity
+                        let currentCity = ManagerCities.shared.currentCity
                         userDefaults.setValue("\(weather.resolvedAddress ?? "") (\(currentCity))", forKey: "Name_City")
                     }
-                    if ManagerData.shared.isGeoLocationDidUpdate {
-                        UserDefaults.standard.setValue(ManagerData.shared.geoLocationResponse, forKey: "Name_City")
+                    if ManagerCities.shared.isGeoLocationDidUpdate {
+                        UserDefaults.standard.setValue(ManagerCities.shared.geoLocationResponse, forKey: "Name_City")
                     }
-                    ManagerData.shared.isGeoLocationDidUpdate = false
-                    ManagerData.shared.isChangeCity = false
-                    ManagerData.shared.nameCity = UserDefaults.standard.value(forKey: "Name_City") as? String ?? ""
+                    ManagerCities.shared.isGeoLocationDidUpdate = false
+                    ManagerCities.shared.isChangeCity = false
+                    ManagerCities.shared.nameCity = UserDefaults.standard.value(forKey: "Name_City") as? String ?? ""
                 DispatchQueue.main.async {
                     self.reloadDataCurrentWeather(weather)
                     self.allWeatherTableView.reloadData()
@@ -158,12 +141,12 @@ class ViewController: UIViewController {
                 return
             }
             if let location = try? JSONDecoder().decode(GeoLocation.self, from: data) {
-                ManagerData.shared.isChangeCity = false
-                ManagerData.shared.isGeoLocationDidUpdate = true
+                ManagerCities.shared.isChangeCity = false
+                ManagerCities.shared.isGeoLocationDidUpdate = true
                 let last = "\(locations.last?.coordinate.latitude ?? 0),\(locations.last?.coordinate.longitude ?? 0)"
-                ManagerData.shared.currentCity = last
-                UserDefaults.standard.setValue(ManagerData.shared.currentCity, forKey: "Current_City")
-                ManagerData.shared.geoLocationResponse = location.display
+                ManagerCities.shared.currentCity = last
+                UserDefaults.standard.setValue(ManagerCities.shared.currentCity, forKey: "Current_City")
+                ManagerCities.shared.geoLocationResponse = location.display
                 self.requestWeatherData()
             } else {
                 print("Bad weather")
@@ -185,8 +168,8 @@ class ViewController: UIViewController {
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "E, d MMM HH:mm"
         let stringFromeDate = dateFormatter2.string(from: dateFromString)
-        cityLabel.text = ManagerData.shared.nameCity
-        UserDefaults.standard.setValue(ManagerData.shared.nameCity, forKey: "Name_City")
+        cityLabel.text = ManagerCities.shared.nameCity
+        UserDefaults.standard.setValue(ManagerCities.shared.nameCity, forKey: "Name_City")
         currentDateLabel.text = stringFromeDate
         currentTemperatureLabel.text = String("\(Int(weather.currentConditions.temp ?? 0))°")
         currentConditionLabel.text = weather.currentConditions.conditions ?? ""
@@ -211,13 +194,13 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension WeatherViewController: UICollectionViewDelegate {
 
 }
-extension ViewController: UICollectionViewDataSource {
+extension WeatherViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let weather = ManagerData.shared.weather else {
+        guard let weather = ManagerCities.shared.weather else {
             return 0
         }
         let count = weather.days?.first?.hours?.count ?? 0
@@ -231,7 +214,7 @@ extension ViewController: UICollectionViewDataSource {
         guard let cell = dequeue(identifier, indexPath) as? CurrentWeatherCollectionViewCell else {
             return UICollectionViewCell()
         }
-        guard let weather = ManagerData.shared.weather else {
+        guard let weather = ManagerCities.shared.weather else {
             return cell
         }
         let dateFormater = DateFormatter()
@@ -249,13 +232,13 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension WeatherViewController: UITableViewDelegate {
 }
 
-extension ViewController: UITableViewDataSource {
+extension WeatherViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let weather = ManagerData.shared.weather else {
+        guard let weather = ManagerCities.shared.weather else {
             return 0
         }
         let count = weather.days?.count
@@ -268,7 +251,7 @@ extension ViewController: UITableViewDataSource {
         guard let cell = dequeue as? AllWeatherTableViewCell else {
             return UITableViewCell()
         }
-        guard let weather = ManagerData.shared.weather else {
+        guard let weather = ManagerCities.shared.weather else {
             return cell
         }
         let dateFormater = DateFormatter()
@@ -289,7 +272,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: CLLocationManagerDelegate {
+extension WeatherViewController: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         requestGeoLocationData(locations)

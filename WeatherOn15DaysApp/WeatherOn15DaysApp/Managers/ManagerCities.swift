@@ -7,13 +7,12 @@
 
 import Foundation
 
-class ManagerData {
+class ManagerCities {
 
-    static var shared = ManagerData()
+    static var shared = ManagerCities()
+
     var currentCity = ""
     var weather: Weather?
-    var citiesStringArray: [String] = []
-    var sortedCitiesStringArray: [String] = []
     var nameCity = ""
     var isChangeCity = false
     var isGeoLocationDidUpdate = false

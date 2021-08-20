@@ -7,11 +7,11 @@
 
 import Foundation
 
-class CitiesData: Decodable {
-    let data: [Datas]
+class CitiesData: Codable {
+    let data: [InfoData]
 }
 
-class Datas: Decodable {
+class InfoData: Codable {
     let country: String
     let cities: [String]
 }

@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Weather View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherOn15DaysApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherViewController" id="BYZ-38-t0r" customClass="WeatherViewController" customModule="WeatherOn15DaysApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -461,94 +461,13 @@
             </objects>
             <point key="canvasLocation" x="-482" y="40"/>
         </scene>
-        <!--List Of Cities View Controller-->
-        <scene sceneID="gBS-Yy-y07">
-            <objects>
-                <viewController storyboardIdentifier="ListOfCitiesViewController" id="bxY-Cf-ATd" customClass="ListOfCitiesViewController" customModule="WeatherOn15DaysApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nfP-J9-Go1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashSecondScreenSky" translatesAutoresizingMaskIntoConstraints="NO" id="0jn-aN-JrR">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                            </imageView>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ti-yI-mNX">
-                                <rect key="frame" x="10" y="54" width="394" height="798"/>
-                                <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="evv-zl-9zy">
-                                        <rect key="frame" x="0.0" y="57.5" width="394" height="740.5"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5I-fE-XWJ">
-                                        <rect key="frame" x="0.0" y="10" width="60" height="37.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="uDP-b7-hc4"/>
-                                        </constraints>
-                                        <state key="normal">
-                                            <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="default"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="backButtonPressed:" destination="bxY-Cf-ATd" eventType="touchUpInside" id="S9a-nZ-rxz"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uzu-co-Ov1">
-                                        <rect key="frame" x="60" y="10" width="334" height="37.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="search" textContentType="address-level2"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="y5I-fE-XWJ" firstAttribute="leading" secondItem="4Ti-yI-mNX" secondAttribute="leading" id="2ox-h1-jyk"/>
-                                    <constraint firstItem="evv-zl-9zy" firstAttribute="top" secondItem="y5I-fE-XWJ" secondAttribute="bottom" constant="10" id="76E-Dl-Rkz"/>
-                                    <constraint firstItem="uzu-co-Ov1" firstAttribute="top" secondItem="4Ti-yI-mNX" secondAttribute="top" constant="10" id="DIE-iV-kFN"/>
-                                    <constraint firstItem="uzu-co-Ov1" firstAttribute="leading" secondItem="y5I-fE-XWJ" secondAttribute="trailing" id="JJd-g5-j8V"/>
-                                    <constraint firstAttribute="bottom" secondItem="evv-zl-9zy" secondAttribute="bottom" id="Mq0-sj-R9d"/>
-                                    <constraint firstItem="evv-zl-9zy" firstAttribute="top" secondItem="uzu-co-Ov1" secondAttribute="bottom" constant="10" id="Sxr-13-Hhq"/>
-                                    <constraint firstAttribute="trailing" secondItem="evv-zl-9zy" secondAttribute="trailing" id="dLK-Ya-oec"/>
-                                    <constraint firstAttribute="trailing" secondItem="uzu-co-Ov1" secondAttribute="trailing" id="fON-Rp-UOz"/>
-                                    <constraint firstItem="y5I-fE-XWJ" firstAttribute="top" secondItem="4Ti-yI-mNX" secondAttribute="top" constant="10" id="hFp-mY-yLr"/>
-                                    <constraint firstItem="evv-zl-9zy" firstAttribute="leading" secondItem="4Ti-yI-mNX" secondAttribute="leading" id="psP-Qa-4NX"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Wi2-Cq-l1o"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="4Ti-yI-mNX" firstAttribute="leading" secondItem="Wi2-Cq-l1o" secondAttribute="leading" constant="10" id="27c-cS-V7g"/>
-                            <constraint firstItem="0jn-aN-JrR" firstAttribute="top" secondItem="Wi2-Cq-l1o" secondAttribute="top" id="SxD-2j-ktg"/>
-                            <constraint firstItem="Wi2-Cq-l1o" firstAttribute="bottom" secondItem="0jn-aN-JrR" secondAttribute="bottom" id="V20-gf-GNL"/>
-                            <constraint firstItem="Wi2-Cq-l1o" firstAttribute="trailing" secondItem="4Ti-yI-mNX" secondAttribute="trailing" constant="10" id="cQy-ks-M1c"/>
-                            <constraint firstItem="0jn-aN-JrR" firstAttribute="leading" secondItem="Wi2-Cq-l1o" secondAttribute="leading" id="hIM-dE-God"/>
-                            <constraint firstItem="Wi2-Cq-l1o" firstAttribute="bottom" secondItem="4Ti-yI-mNX" secondAttribute="bottom" constant="10" id="mQg-ya-KoM"/>
-                            <constraint firstItem="4Ti-yI-mNX" firstAttribute="top" secondItem="Wi2-Cq-l1o" secondAttribute="top" constant="10" id="nyF-43-Fyf"/>
-                            <constraint firstItem="Wi2-Cq-l1o" firstAttribute="trailing" secondItem="0jn-aN-JrR" secondAttribute="trailing" id="xGT-GT-Oka"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="listCitiesTableView" destination="evv-zl-9zy" id="Uto-da-JAb"/>
-                        <outlet property="listCitiesTextField" destination="uzu-co-Ov1" id="2gV-vn-t4b"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sL1-GE-iBH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="469.60000000000002" y="38.23088455772114"/>
-        </scene>
     </scenes>
     <resources>
         <image name="arrow.triangle.2.circlepath" catalog="system" width="128" height="101"/>
-        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="humidity" width="214" height="330"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="pressure" width="422" height="500"/>
         <image name="splashScreenSky" width="1440" height="2560"/>
-        <image name="splashSecondScreenSky" width="750" height="1334"/>
         <image name="sunrise" width="294" height="280"/>
         <image name="sunset" width="303" height="257"/>
         <image name="uvindex" width="134" height="137"/>
