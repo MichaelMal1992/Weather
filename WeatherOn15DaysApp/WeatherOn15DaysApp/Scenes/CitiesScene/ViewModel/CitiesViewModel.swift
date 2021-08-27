@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CitiesViewModel {
 
-    var didUpdateData: (([String]) -> ())? { get set }
+    var didUpdateData: (([String]) -> Void)? { get set }
     func viewDidLoad()
 }

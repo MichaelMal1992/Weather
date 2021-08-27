@@ -12,7 +12,7 @@ class ManagerCities {
     static var shared = ManagerCities()
 
     var currentCity = ""
-    var weather: Weather?
+    var weather: WeatherData?
     var nameCity = ""
     var isChangeCity = false
     var isGeoLocationDidUpdate = false

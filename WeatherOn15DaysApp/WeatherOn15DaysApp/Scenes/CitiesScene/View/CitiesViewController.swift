@@ -47,7 +47,7 @@ class CitiesViewController: UIViewController {
                                                object: citiesTextField)
     }
 
-    @objc func didChangeCities() {
+    @objc private func didChangeCities() {
         if let text = citiesTextField.text {
             if text.isEmpty == false {
                 citiesTableView.isHidden = false

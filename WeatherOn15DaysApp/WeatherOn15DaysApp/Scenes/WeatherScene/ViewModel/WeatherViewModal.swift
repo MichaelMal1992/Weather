@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WeatherViewPresenterProtocol {
+protocol WeatherViewModal {
 
     func viewDidLoad()
 }

@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
+class WeatherViewController: UIViewController {
 
     @IBOutlet weak private var currentWeatherCollectionView: UICollectionView!
     @IBOutlet weak private var allWeatherTableView: UITableView!
@@ -30,9 +30,13 @@ class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     private let localeManager = CLLocationManager()
     private var isDisplayDidTurne = true
+    private var viewModel: WeatherViewModal?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.viewModel = WeatherViewModelImplementation(WeatherViewController())
+
         localeManager.delegate = self
         currentWeatherCollectionView.delegate = self
         currentWeatherCollectionView.dataSource = self
@@ -96,7 +100,7 @@ class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
                 print("No data in response")
                 return
             }
-            if let weather = try? JSONDecoder().decode(Weather.self, from: data) {
+            if let weather = try? JSONDecoder().decode(WeatherData.self, from: data) {
                     ManagerCities.shared.weather = weather
                     if ManagerCities.shared.isChangeCity {
                         let userDefaults = UserDefaults.standard
@@ -155,7 +159,7 @@ class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
         task.resume()
     }
 
-    private func reloadDataCurrentWeather(_ weather: Weather?) {
+    private func reloadDataCurrentWeather(_ weather: WeatherData?) {
         guard let weather = weather else {
             return
         }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Weather: Codable {
+class WeatherData: Codable {
 
     let latitude: Double?
     let longitude: Double?

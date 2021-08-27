@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CitiesViewModelImplementation: CitiesViewModel {
 
@@ -14,11 +15,11 @@ class CitiesViewModelImplementation: CitiesViewModel {
         self.viewController = viewController
     }
 
-    var didUpdateData: (([String]) -> ())?
+    var didUpdateData: (([String]) -> Void)?
 
-    private var citiesData: [String]? {
+    private var cities: [String]? {
         didSet {
-            if let citiesData = citiesData {
+            if let citiesData = cities {
                 self.didUpdateData?(citiesData)
             }
         }
@@ -26,8 +27,7 @@ class CitiesViewModelImplementation: CitiesViewModel {
 
     func viewDidLoad() {
         DispatchQueue.main.async {
-            let citiesData = self.requestCities()
-            self.citiesData = citiesData
+            self.cities = self.requestCities()
         }
     }
 
