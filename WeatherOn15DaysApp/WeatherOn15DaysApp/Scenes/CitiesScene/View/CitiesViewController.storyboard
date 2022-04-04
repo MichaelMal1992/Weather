@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Cities View Controller-->
+        <scene sceneID="qnp-1F-2uC">
+            <objects>
+                <viewController storyboardIdentifier="CitiesViewController" id="XPj-e6-zKf" customClass="CitiesViewController" customModule="WeatherOn15DaysApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NWd-rk-29f">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashSecondScreenSky" translatesAutoresizingMaskIntoConstraints="NO" id="Y5T-w7-DeP">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </imageView>
+                            <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fs6-Yb-Dg0">
+                                <rect key="frame" x="10" y="54" width="394" height="798"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n60-kS-Xa7">
+                                        <rect key="frame" x="0.0" y="57.5" width="394" height="740.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hrd-Ic-qRi">
+                                        <rect key="frame" x="0.0" y="10" width="60" height="37.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="NpD-bt-qZ4"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="default"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="XPj-e6-zKf" eventType="touchUpInside" id="yBG-vo-OEG"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="justified" clearsOnBeginEditing="YES" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iQg-h4-mtB">
+                                        <rect key="frame" x="60" y="10" width="334" height="37.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="search" textContentType="address-level2"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="iQg-h4-mtB" secondAttribute="trailing" id="4ba-LI-bPl"/>
+                                    <constraint firstItem="iQg-h4-mtB" firstAttribute="leading" secondItem="Hrd-Ic-qRi" secondAttribute="trailing" id="F7T-RM-Dgi"/>
+                                    <constraint firstAttribute="bottom" secondItem="n60-kS-Xa7" secondAttribute="bottom" id="H36-Sm-1Of"/>
+                                    <constraint firstItem="iQg-h4-mtB" firstAttribute="top" secondItem="fs6-Yb-Dg0" secondAttribute="top" constant="10" id="ZP8-sq-xFs"/>
+                                    <constraint firstItem="n60-kS-Xa7" firstAttribute="leading" secondItem="fs6-Yb-Dg0" secondAttribute="leading" id="bPM-mr-JGX"/>
+                                    <constraint firstItem="Hrd-Ic-qRi" firstAttribute="top" secondItem="fs6-Yb-Dg0" secondAttribute="top" constant="10" id="c0w-Rb-iKV"/>
+                                    <constraint firstItem="n60-kS-Xa7" firstAttribute="top" secondItem="iQg-h4-mtB" secondAttribute="bottom" constant="10" id="dpV-JL-Che"/>
+                                    <constraint firstItem="n60-kS-Xa7" firstAttribute="top" secondItem="Hrd-Ic-qRi" secondAttribute="bottom" constant="10" id="n8V-Zi-zHi"/>
+                                    <constraint firstItem="Hrd-Ic-qRi" firstAttribute="leading" secondItem="fs6-Yb-Dg0" secondAttribute="leading" id="upP-Ah-b1c"/>
+                                    <constraint firstAttribute="trailing" secondItem="n60-kS-Xa7" secondAttribute="trailing" id="vY8-3O-2JE"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dsr-ry-bko"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dsr-ry-bko" firstAttribute="bottom" secondItem="Y5T-w7-DeP" secondAttribute="bottom" id="Nkb-Jz-Ja0"/>
+                            <constraint firstItem="Y5T-w7-DeP" firstAttribute="top" secondItem="dsr-ry-bko" secondAttribute="top" id="RWa-5i-gpk"/>
+                            <constraint firstItem="dsr-ry-bko" firstAttribute="trailing" secondItem="Y5T-w7-DeP" secondAttribute="trailing" id="Vu3-Or-GeU"/>
+                            <constraint firstItem="dsr-ry-bko" firstAttribute="trailing" secondItem="fs6-Yb-Dg0" secondAttribute="trailing" constant="10" id="aRA-mG-9Ch"/>
+                            <constraint firstItem="Y5T-w7-DeP" firstAttribute="leading" secondItem="dsr-ry-bko" secondAttribute="leading" id="rhI-uC-EzC"/>
+                            <constraint firstItem="fs6-Yb-Dg0" firstAttribute="leading" secondItem="dsr-ry-bko" secondAttribute="leading" constant="10" id="s6K-OP-mtx"/>
+                            <constraint firstItem="dsr-ry-bko" firstAttribute="bottom" secondItem="fs6-Yb-Dg0" secondAttribute="bottom" constant="10" id="tUy-xc-Dsd"/>
+                            <constraint firstItem="fs6-Yb-Dg0" firstAttribute="top" secondItem="dsr-ry-bko" secondAttribute="top" constant="10" id="xpn-Ff-d4b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="citiesTableView" destination="n60-kS-Xa7" id="TEK-MI-ozu"/>
+                        <outlet property="citiesTextField" destination="iQg-h4-mtB" id="SHv-1I-uoQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="unU-NF-NLg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="161" y="13"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="splashSecondScreenSky" width="750" height="1334"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
